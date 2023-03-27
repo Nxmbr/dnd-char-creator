@@ -1,69 +1,34 @@
-# latex-action [![GitHub Actions Status](https://github.com/matsavage/latex-action/workflows/Test%20Github%20Action/badge.svg)](https://github.com/matsavage/latex-action/actions)
+# DND 5e LaTeX Character Sheet Template
 
-> GitHub Action to compile LaTeX documents.
+> LaTeX template to typeset Dungeons and Dragons 5th edition character sheets.
 
-This actions runs on docker using a [maximal TeXLive environment](https://hub.docker.com/r/danteev/texlive/) and the [DnD 5e LaTeX Template](https://github.com/rpgtex/DND-5e-LaTeX-Template/) installed.
+## Features
 
-## Inputs
+* Character and Spell sheets
+* High degree of customisation available
+* Works with XeTeX locally or via GitHub actions
 
-* `root_file`
+<img src=https://github.com/matsavage/DND-5e-LaTeX-Character-Sheet-Template/raw/main/fighter_character_sheet.png/>
 
-    The root LaTeX file to be compiled. If unset, will run on all .tex files in the working_directory.
 
-* `working_directory`
+## Usage
 
-    The working directory for the latex compiler to be invoked.
+### Building a character sheet
 
-* `compiler`
+It is reccomended to look at pre-existing character sheets in the `characters` directory when using this repository for the first time, each text input area of the character sheet is fillable with functions defined in the template, however it may require some trial and error to have the sheet looking as you intend.
 
-    The LaTeX engine to be used. By default, [`latexmk`](https://ctan.org/pkg/latexmk) is used, which automates the process of generating LaTeX documents by issuing the appropriate sequence of commands to be run.
+### Compliation
 
-* `args`
+If you use this as a template repository, there is a configured [GitHub Action](https://github.com/matsavage/dnd-latex-action) which will compile all `.tex` files in the `characters` directory to PDF sheets in situ. Alternatively it is reccomended to use XeLaTeX and the [DnD 5e LaTeX Template](https://github.com/rpgtex/DND-5e-LaTeX-Template) if compiling locally.
 
-    The extra arguments to be passed to the compiler. By default, it is `-pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode`. This tells `latexmk` to use `pdflatex`. Refer to [`latexmk` document](http://texdoc.net/texmf-dist/doc/support/latexmk/latexmk.pdf) for more information.
+### Customisation
 
-* `extra_system_packages`
+There are a large number of character sheet customisation options available in [`character-sheet-settings.tex`](https://github.com/matsavage/DND-5e-LaTeX-Character-Template/blob/documentation/character-sheet-settings.tex) which acts a central location to modify colour and opacity for a number of character sheet elements.
 
-    The extra packages to be installed by [`apt-get`](https://en.wikipedia.org/wiki/APT_(Package_Manager)) separated by space.
+## Dependencies
 
-* `runs`
+This package requires LaTeX and the [DnD 5e LaTeX Template](https://github.com/rpgtex/DND-5e-LaTeX-Template). I reccomend using the [instructions](https://github.com/rpgtex/DND-5e-LaTeX-Template/tree/355b9ced1b42324574c2c4e28f9783f29c760a20#dependencies) provided with this package to set up your environment if not using the included GitHub action.
 
-    Number of times to run the compilation.
+## Credits
 
-## Example
-
-```yaml
-name: Build LaTeX document
-on: [push]
-jobs:
-  build_latex:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Git repository
-        uses: actions/checkout@v1
-      - name: Compile LaTeX document
-        uses: dante-ev/latex-action@master
-        with:
-          root_file: main.tex
-```
-
-## FAQs
-
-### How to use XeLaTeX or LuaLaTeX instead of pdfLaTeX?
-
-By default, this action uses pdfLaTeX. If you want to use XeLaTeX or LuaLaTeX, you can set the `args` to `-xelatex -latexoption=-file-line-error -latexoption=-interaction=nonstopmode` or `-lualatex -latexoption=-file-line-error -latexoption=-interaction=nonstopmode` respectively. Alternatively, you could create a `.latexmkrc` file. Refer to the [`latexmk` document](http://texdoc.net/texmf-dist/doc/support/latexmk/latexmk.pdf) for more information.
-
-### How to enable `--shell-escape`?
-
-To enable `--shell-escape`, you should add it to `args`. For example, set `args` to `-pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -latexoption=-shell-escape` when using pdfLaTeX.
-
-### Where does the initial code come from?
-
-The initial code is from [xu-cheng/latex-action](https://github.com/xu-cheng/latex-action).
-The idea there is to initially provide all packages instead of using [texliveonfly](https://ctan.org/pkg/texliveonfly).
-Using a full installation, this action also offers to use packages such as [pax](https://ctan.org/pkg/pax), which require other tooling such as perl.
-More reasoning is given in [ADR-0002](https://github.com/dante-ev/docker-texlive/blob/master/docs/adr/0002-provide-all-packages.md#provide-all-packages).
-
-## License
-
-MIT
+* This package was generated from the standard Wizards of the Coast [PDF character sheet](https://media.wizards.com/2016/dnd/downloads/5E_CharacterSheet_Fillable.pdf) template

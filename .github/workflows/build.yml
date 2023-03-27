@@ -1,33 +1,23 @@
 name: DnD LaTeX compilation
-description: Compiles latex documents using pdflatex, lualatex, xelatex. Full TeXLive distribution.
-author: Cheng XU, Oliver Kopp
-inputs:
-  root_file:
-    description: The root LaTeX file to be compiled, if unset will run on all .tex documents in the working_directory
-    required: false
-  working_directory: ./lib/dnd/characters
-    description: The working directory for the latex compiler to be invoked
-  compiler:
-    description: LaTeX engine to be used
-    default: latexmk
-  args:
-    description: Extra arguments to be passed to the latex compiler
-    default: "-pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode"
-  extra_system_packages:
-    description: Install extra packages by apt-get
-  runs:
-    descrption: Number of times to run the compilation
-    default: 1
-runs:
-  using: docker
-  image: Dockerfile
-  args:
-    - ${{ inputs.root_file }}
-    - ${{ inputs.working_directory }}
-    - ${{ inputs.compiler }}
-    - ${{ inputs.args }}
-    - ${{ inputs.extra_system_packages }}
-    - ${{ inputs.runs }}
-branding:
-  icon: book
-  color: blue
+on: [push]
+description: Compiles latex documents using xelatex.
+author: Tristan
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Compile all .tex files in the working directory
+        uses: dante-ev/latex-action@master
+        with:
+          pre_compile: |
+            for texfile in ./lib/dnd/characters/*.tex; do
+              echo "Compiling $texfile"
+              xelatex -interaction=nonstopmode "$texfile"
+            done
+          root_file: "" # Leave this empty
+          working_directory: ./characters
+          compiler: xelatex

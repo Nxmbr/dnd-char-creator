@@ -1,0 +1,290 @@
+# DND 5e LaTeX Character Sheet Template
+
+> LaTeX template to typeset Dungeons and Dragons 5th edition character sheets.
+
+## Features
+
+* Character and Spell sheets
+* High degree of customisation available
+* Works with XeTeX locally or via GitHub actions
+
+<img src=https://github.com/matsavage/DND-5e-LaTeX-Character-Sheet-Template/raw/main/fighter_character_sheet.png/>
+
+
+## Usage
+
+### Building a character sheet
+
+It is reccomended to look at pre-existing character sheets in the `characters` directory when using this repository for the first time, each text input area of the character sheet is fillable with functions defined in the template, however it may require some trial and error to have the sheet looking as you intend.
+
+### Compliation
+
+If you use this as a template repository, there is a configured [GitHub Action](https://github.com/matsavage/dnd-latex-action) which will compile all `.tex` files in the `characters` directory to PDF sheets in situ. Alternatively it is reccomended to use XeLaTeX and the [DnD 5e LaTeX Template](https://github.com/rpgtex/DND-5e-LaTeX-Template) if compiling locally.
+
+### Customisation
+
+There are a large number of character sheet customisation options available in [`character-sheet-settings.tex`](https://github.com/matsavage/DND-5e-LaTeX-Character-Template/blob/documentation/character-sheet-settings.tex) which acts a central location to modify colour and opacity for a number of character sheet elements.
+
+## Dependencies
+
+This package requires LaTeX and the [DnD 5e LaTeX Template](https://github.com/rpgtex/DND-5e-LaTeX-Template). I recommend using the [instructions](https://github.com/rpgtex/DND-5e-LaTeX-Template/tree/355b9ced1b42324574c2c4e28f9783f29c760a20#dependencies) provided with this package to set up your environment if not using the included GitHub action.
+
+## Credits
+
+* This package was generated from the standard Wizards of the Coast [PDF character sheet](https://media.wizards.com/2016/dnd/downloads/5E_CharacterSheet_Fillable.pdf) template
+
+-----------------------------
+/Character-sheet-settings.tex
+{% DEFINE FONT FOR USER INPUTTED TEXT
+\newfontfamily\entryfont{Kalam}[Path=template/fonts/,Extension=.ttf,UprightFont=Kalam-Regular,BoldFont=Kalam-Bold]
+
+% HEADER BACKGROUND COLOR AND OPACITY
+\newrgbcolor{header-background-color}{0.87058824 0.87450981 0.87450981}
+\pgfmathsetmacro{\headercolorbackgroundopacity}{1}
+
+% HEADER DRAWING (DRAGON ETC) COLOR AND OPACITY
+\newrgbcolor{character-sheet-dragon-color}{0 0 0}
+\newrgbcolor{character-sheet-dragon-eye-color}{1 0 0}
+\newrgbcolor{spell-sheet-fireball-color}{0 0 0}
+\pgfmathsetmacro{\headerdragonopacity}{1}
+
+% HEADER TRIM
+\newrgbcolor{header-color}{0.850 0.764 0.466}
+\newrgbcolor{header-color-accent}{0.705 0.607 0.431}
+
+% GREY BACKGROUND FOR STAT BLOCK SECTION
+\pgfmathsetmacro{\generalbackgroundopacity}{0}
+\pgfmathsetmacro{\statsbackgroundopacity}{0}
+
+% WHITE BACKGROUNDS FOR STATS BLOCKS AND MODIFIERS
+\pgfmathsetmacro{\statsscoreopacity}{0}
+\pgfmathsetmacro{\statsmodifieropacity}{0}
+
+% COLOR FOR BLOCK OUTLINES
+\newrgbcolor{outline-color}{0.850 0.764 0.466}
+
+% COLORS FOR MONEY OUTLINES
+\newrgbcolor{money-outline-color}{0.850 0.764 0.466}
+\newrgbcolor{money-outline-color-accent}{0.705 0.607 0.431}
+
+% SPELL HEADER COLOR AND BACKGROUND OPACITY
+\pgfmathsetmacro{\spellheaderbackgroundopacity}{0}
+\pgfmathsetmacro{\spellheaderbackgroundinfillopacity}{1}
+}
+-----------------------
+/dndtemplate.sty
+{
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{dndtemplate}[2021/08/07 DnD Character Template]
+
+\usepackage{fontspec}
+\usepackage{ifthen}
+\usepackage{pstricks}
+
+\input{character-sheet-settings}
+\input{template/character-sheet-commands}
+
+\newcommand{\rendercharactersheet}{\input{template/character-sheet.tex}}
+\newcommand{\renderbackgroundsheet}{\input{template/background-sheet.tex}}
+\newcommand{\renderspellsheet}{\input{template/spell-sheet.tex}}
+}
+-------------------
+/template/character-sheet.tex
+{
+\newgeometry{left=-0.6cm,right=0cm,top=0cm,bottom=0cm}
+
+\newpage
+
+%\hspace*{-9mm}
+\makebox[\paperwidth][s]{
+%\newpage
+\thispagestyle{empty}
+\psset{xunit=0.75pt,yunit=0.75pt,runit=0.75pt}
+\begin{pspicture}(816,1056)
+{
+%\psframe[fillstyle=solid,fillcolor=blue!20,linewidth=3pt,linecolor=black](0,0)(816,1056)
+
+\input{template/character-sheet/header.tex}
+\input{template/character-sheet/stats.tex}
+\input{template/character-sheet/battle-stats.tex}
+\input{template/character-sheet/outlines.tex}
+\input{template/character-sheet/money-outlines.tex}
+\input{template/character-sheet/traits.tex}
+\input{template/character-sheet/player-input.tex}
+\input{template/character-sheet/proficiency-markers.tex}
+\input{template/character-sheet/template-text.tex}
+
+}
+
+\end{pspicture}
+}
+
+\restoregeometry
+}
+--------
+/template/spell-sheet.tex
+{
+\newgeometry{left=-0.6cm,right=0cm,top=0cm,bottom=0cm}
+
+\newpage
+
+%\hspace*{-9mm}
+\makebox[\paperwidth][s]{
+%\newpage
+\thispagestyle{empty}
+\psset{xunit=0.75pt,yunit=0.75pt,runit=0.75pt}
+\begin{pspicture}(816,1056)
+{
+%\psframe[fillstyle=solid,fillcolor=blue!20,linewidth=3pt,linecolor=black](0,0)(816,1056)
+
+\input{template/spell-sheet/header.tex}
+\input{template/spell-sheet/outlines.tex}
+\input{template/spell-sheet/spell-level-headers.tex}
+\input{template/spell-sheet/player-input.tex}
+\input{template/spell-sheet/spell-slots.tex}
+\input{template/spell-sheet/template-text.tex}
+
+}
+
+\end{pspicture}
+}
+
+\restoregeometry
+}
+-----
+/template/background-sheet.tex
+{
+    \newgeometry{left=-0.6cm,right=0cm,top=0cm,bottom=0cm}
+
+\newpage
+
+%\hspace*{-9mm}
+\makebox[\paperwidth][s]{
+%\newpage
+\thispagestyle{empty}
+\psset{xunit=0.75pt,yunit=0.75pt,runit=0.75pt}
+\begin{pspicture}(816,1056)
+{
+%\psframe[fillstyle=solid,fillcolor=blue!20,linewidth=3pt,linecolor=black](0,0)(816,1056)
+
+\input{template/background-sheet/header.tex}
+\input{template/background-sheet/allies-organization.tex}
+\input{template/background-sheet/outlines.tex}
+\input{template/background-sheet/player-input.tex}
+\input{template/background-sheet/template-text.tex}
+
+}
+
+\end{pspicture}
+}
+
+\restoregeometry
+}
+----
+/template/character-sheet/template-text.tex
+{
+    \rput[ll](92.61541956,930.95690433){\scriptsize \textsf{CHARACTER NAME}}
+
+\rput[ll](361.87600658,965.730236795){\scriptsize \textsf{CLASS \& LEVEL}}
+\rput[ll](512.21666949,965.730236795){\scriptsize \textsf{BACKGROUND}}
+\rput[ll](641.23599959,965.730236795){\scriptsize \textsf{PLAYER NAME}}
+
+\rput[ll](361.87600658,930.95690433){\scriptsize \textsf{RACE}}
+\rput[ll](512.21666949,930.95690433){\scriptsize \textsf{ALIGNMENT}}
+\rput[ll](641.23599959,930.95690433){\scriptsize \textsf{EXPERIENCE POINTS}}
+
+\rput[cl](76.251064759,857.27396372){\tiny \textsf{\textbf{STRENGTH}}}
+\rput[cl](76.251064759,761.48126455){\tiny \textsf{\textbf{DEXTERITY}}}
+\rput[cl](76.251064759,666.47223516){\tiny \textsf{\textbf{CONSTITUTION}}}
+\rput[cl](76.251064759,570.59143756){\tiny \textsf{\textbf{INTELLIGENCE}}}
+\rput[cl](76.251064759,475.19063994){\tiny \textsf{\textbf{WISDOM}}}
+\rput[cl](76.251064759,379.98170899){\tiny \textsf{\textbf{CHARISMA}}}
+
+\rput[cc](218.20631560,869.81611158){\scriptsize \textbf{\textsf{INSPIRATION}}}
+
+\rput[cc](218.69321135,819.51875100){\scriptsize \textbf{\textsf{PROFICIENCY BONUS}}}
+
+\rput[l](173.28189666,774.25558064){\scriptsize \textsf{Strength}}
+\rput[l](173.28189666,756.25558109){\scriptsize \textsf{Dexterity}}
+\rput[l](173.28189666,738.25558154){\scriptsize \textsf{Constitution}}
+\rput[l](173.28189666,720.25558199){\scriptsize \textsf{Intelligence}}
+\rput[l](173.28189666,702.25558244){\scriptsize \textsf{Wisdom}}
+\rput[l](173.28189666,684.25558289){\scriptsize \textsf{Charisma}}
+
+\rput[cc](200.204378405,663.33945033){\scriptsize \textbf{\textsf{SAVING THROWS}}}
+
+\newrgbcolor{curcolor}{0.70980394 0.71372551 0.71372551}
+\rput[l](173.28189666,620.57651781){\scriptsize \textsf{Acrobatics \textcolor{curcolor}{(Dex)}}}
+\rput[l](173.28189666,602.57651827){\scriptsize \textsf{Animal Handling \textcolor{curcolor}{(Wis)}}}
+\rput[l](173.28189666,584.57651872){\scriptsize \textsf{Arcana \textcolor{curcolor}{(Int)}}}
+\rput[l](173.28189666,566.57651917){\scriptsize \textsf{Athletics \textcolor{curcolor}{(Str)}}}
+\rput[l](173.28189666,548.57651962){\scriptsize \textsf{Deception \textcolor{curcolor}{(Cha)}}}
+\rput[l](173.28189666,530.57652007){\scriptsize \textsf{History \textcolor{curcolor}{(Int)}}}
+\rput[l](173.28189666,512.57652052){\scriptsize \textsf{Insight \textcolor{curcolor}{(Wis)}}}
+\rput[l](173.28189666,494.57652097){\scriptsize \textsf{Intimidation \textcolor{curcolor}{(Cha)}}}
+\rput[l](173.28189666,476.57652142){\scriptsize \textsf{Investigation \textcolor{curcolor}{(Int)}}}
+\rput[l](173.28189666,458.57652187){\scriptsize \textsf{Medicine \textcolor{curcolor}{(Wis)}}}
+\rput[l](173.28189666,440.57652232){\scriptsize \textsf{Nature \textcolor{curcolor}{(Int)}}}
+\rput[l](173.28189666,422.57652277){\scriptsize \textsf{Perception \textcolor{curcolor}{(Wis)}}}
+\rput[l](173.28189666,404.57652322){\scriptsize \textsf{Performance \textcolor{curcolor}{(Cha)}}}
+\rput[l](173.28189666,386.57652367){\scriptsize \textsf{Persuasion \textcolor{curcolor}{(Cha)}}}
+\rput[l](173.28189666,368.57652412){\scriptsize \textsf{Religion \textcolor{curcolor}{(Int)}}}
+\rput[l](173.28189666,350.57652457){\scriptsize \textsf{Sleight of Hand \textcolor{curcolor}{(Dex)}}}
+\rput[l](173.28189666,332.57652502){\scriptsize \textsf{Stealth \textcolor{curcolor}{(Dex)}}}
+\rput[l](173.28189666,314.57652547){\scriptsize \textsf{Survival \textcolor{curcolor}{(Wis)}}}
+
+\rput[cc](200.204378405,293.99779994){\scriptsize \textbf{\textsf{SKILLS}}}
+
+\rput[cc](174.12761164,256.37518057){\scriptsize \textbf{\textsf{PASSIVE WISDOM (PERCEPTION)}}}
+
+\rput[cc](156.706495785,40.76616174){\scriptsize \textbf{\textsf{OTHER PROFICIENCIES \& LANGUAGES}}}
+
+\rput[cc](331.06809331,829.9796977){\scriptsize \textbf{\textsf{ARMOR}}}
+\rput[cc](331.06809331,821.9796979){\scriptsize \textbf{\textsf{CLASS}}}
+\rput[cc](405.68778402,818.3871647){\scriptsize \textbf{\textsf{INITIATIVE}}}
+\rput[cc](483.73416187,818.3871647){\scriptsize \textbf{\textsf{SPEED}}}
+\newrgbcolor{curcolor}{0.70980394 0.71372551 0.71372551}
+\rput[l](307.26267461,783.326005935){\scriptsize \textcolor{curcolor}{\textsf{Hit Point Maximum}}}
+\rput[cc](408.51142872,725.3142336){\scriptsize \textbf{\textsf{CURRENT HIT POINTS}}}
+\rput[cc](408.51142872,654.7201021){\scriptsize \textbf{\textsf{TEMPORARY HIT POINTS}}}
+
+\newrgbcolor{curcolor}{0.70980394 0.71372551 0.71372551}
+\rput[l](307.26267461,622.547876625){\scriptsize \textcolor{curcolor}{\textsf{Total}}}
+\rput[cc](351.21998412,579.77462366){\scriptsize \textsf{HIT DICE}}
+
+\rput[r](459.31936706,620.21408931){\tiny \textsf{SUCCESSES}}
+\rput[r](459.31936706,600.21488980){\tiny \textsf{FAILURES}}
+\rput[cc](464.69891458,579.77462366){\scriptsize \textsf{DEATH SAVES}}
+
+
+%\newrgbcolor{curcolor}{0.58823532 0.59215689 0.59215689}
+%\rput[l](298.79230060,539.71783481){\tiny \textcolor{curcolor}{\textsf{NAME}}}
+%\rput[l](388.34561946,539.71783481){\tiny \textcolor{curcolor}{\textsf{ATK BONUS}}}
+%\rput[l](436.75456382,539.71783481){\tiny \textcolor{curcolor}{\textsf{DAMAGE/TYPE}}}
+
+
+\rput[cc](409.580659095,293.99779994){\scriptsize \textbf{\textsf{ATTACKS \& SPELLCASTING}}}
+
+\newrgbcolor{curcolor}{0.58823532 0.59215689 0.59215689}
+\rput[cc](290.045526075,245.77543200){\tiny \textcolor{curcolor}{\textsf{CP}}}
+\rput[cc](290.045526075,211.49076620){\tiny \textcolor{curcolor}{\textsf{SP}}}
+\rput[cc](290.045526075,176.72971055){\tiny \textcolor{curcolor}{\textsf{EP}}}
+\rput[cc](290.045526075,141.96116794){\tiny \textcolor{curcolor}{\textsf{GP}}}
+\rput[cc](290.045526075,107.68024561){\tiny \textcolor{curcolor}{\textsf{PP}}}
+
+\rput[cc](409.580659095,40.76616174){\scriptsize \textbf{\textsf{EQUIPMENT}}}
+
+\rput[cc](660.73142704,799.27275150){\tiny \textsf{PERSONALITY TRAITS}}
+\rput[cc](660.73142704,725.90488667){\tiny \textsf{IDEALS}}
+\rput[cc](660.73142704,651.45182186){\tiny \textsf{BONDS}}
+\rput[cc](660.73142704,578.48089036 ){\tiny \textsf{FLAWS}}
+
+
+\rput[cc](660.887985695,40.76616174){\scriptsize \textbf{\textsf{FEATURES \& TRAITS}}}
+
+
+
+% COPYRIGHT STATEMENT
+\newrgbcolor{curcolor}{0.78823531 0.79215688 0.79607844}
+\rput[cl](407.874960829,18.449911515){\footnotesize \textcolor{curcolor}{\textsf{TM \& \textcopyright 2014 Wizards of the Coast LLC. Permission is granted to photocopy this document for personal use.}}}
+}

@@ -23,9 +23,9 @@ jobs:
         run: |
           mkdir -p output
           for texfile in ./characters/*.tex; do
-            outputfile="output/$(basename -s .tex $texfile).pdf"
+            outputfile="./characters/$(basename -s .tex $texfile).pdf"
             echo "Compiling $texfile -> $outputfile"
-            TEXINPUTS=./latex_packages//: xelatex -interaction=nonstopmode -output-directory=output -aux-directory=./characters "$texfile"
+            TEXINPUTS=./latex_packages//: xelatex -interaction=nonstopmode "$texfile"
           done
 
       - name: Compile the main document

@@ -9,4 +9,4 @@ jobs:
       - name: Compile document.tex
         uses: dante-ev/latex-action@master
         with:
-          root_file: /lib/dnd/characters/elara.tex
+          root_file: ./lib/dnd/characters/elara.tex

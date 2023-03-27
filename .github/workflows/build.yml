@@ -34,3 +34,8 @@ jobs:
           root_file: "" # Leave this empty
           working_directory: ./characters
           compiler: xelatex
+          args: >-
+            -pdf
+            -interaction=nonstopmode
+            -file-line-error
+

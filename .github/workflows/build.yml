@@ -25,7 +25,7 @@ jobs:
           for texfile in ./characters/*.tex; do
             outputfile="output/$(basename -s .tex $texfile).pdf"
             echo "Compiling $texfile -> $outputfile"
-            TEXINPUTS=./latex_packages//: xelatex -interaction=nonstopmode -output-directory=output "$texfile"
+            TEXINPUTS=./latex_packages//: xelatex -interaction=nonstopmode -output-directory=output -aux-directory=./characters "$texfile"
           done
 
       - name: Compile the main document

@@ -5,7 +5,7 @@ inputs:
   root_file:
     description: The root LaTeX file to be compiled, if unset will run on all .tex documents in the working_directory
     required: false
-  working_directory:
+  working_directory: lib/dnd/characters
     description: The working directory for the latex compiler to be invoked
   compiler:
     description: LaTeX engine to be used

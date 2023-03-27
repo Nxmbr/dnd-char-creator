@@ -7,8 +7,10 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
 
-      - name: Install TeX Live XeTeX package
-        run: sudo apt-get install -y texlive-xetex texlive-latex-extra texlive-fonts-extra
+      - name: Install TeX Live packages from packages.txt
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y $(cat packages.txt | tr '\n' ' ')
 
       - name: Download DND-5e-LaTeX-Template repository and copy the content
         run: |
@@ -17,7 +19,7 @@ jobs:
           mkdir -p latex_packages
           cp -r DND-5e-LaTeX-Template-stable/* latex_packages/
 
-      - name: Compile all .tex files in the working directory
+      - name: Compile all .tex files in the characters directory
         run: |
           mkdir -p output
           for texfile in ./characters/*.tex; do

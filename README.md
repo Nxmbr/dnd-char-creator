@@ -4,12 +4,11 @@
 
 ## Features
 
-* Character and Spell sheets
-* High degree of customisation available
-* Works with XeTeX locally or via GitHub actions
+- Character and Spell sheets
+- High degree of customisation available
+- Works with XeTeX locally or via GitHub actions
 
 <img src=https://github.com/matsavage/DND-5e-LaTeX-Character-Sheet-Template/raw/main/fighter_character_sheet.png/>
-
 
 ## Usage
 
@@ -31,4 +30,4 @@ This package requires LaTeX and the [DnD 5e LaTeX Template](https://github.com/r
 
 ## Credits
 
-* This package was generated from the standard Wizards of the Coast [PDF character sheet](https://media.wizards.com/2016/dnd/downloads/5E_CharacterSheet_Fillable.pdf) template
+- This package was generated from the standard Wizards of the Coast [PDF character sheet](https://media.wizards.com/2016/dnd/downloads/5E_CharacterSheet_Fillable.pdf) template

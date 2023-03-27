@@ -10,6 +10,12 @@ jobs:
       - name: Install TeX Live XeTeX package
         run: sudo apt-get install -y texlive-xetex
 
+      - name: Clone DND-5e-LaTeX-Template and copy dnd.sty
+        run: |
+          git clone https://github.com/rpgtex/DND-5e-LaTeX-Template.git
+          mkdir -p latex_packages
+          cp DND-5e-LaTeX-Template/dnd.sty latex_packages/
+
       - name: Compile all .tex files in the working directory
         run: |
           mkdir -p output

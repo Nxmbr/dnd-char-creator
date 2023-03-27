@@ -1,24 +1,3 @@
-# Package dependencies
-#
-#   cfr-initials: simplified drop cap font loading
-#   environ: required by tcolorbox
-#   everysel: legacy font change hooks required by ragged2e
-#   etex-pkg: provides e-TeX, transitive dependency
-#   fontaxes: gillius dependency
-#   gillius: sans serif body font
-#   initials: drop caps
-#   kpfonts: sans serif title font
-#   l3backend: xparse dependency
-#   l3kernel: xparse dependency
-#   l3packages: xparse
-#   minifp: required by lettrine
-#   ms: multitoc, ragged2e
-#   oberdiek: luacolor
-#   pgf: tikz
-#   tools: array, calc, tabularx
-#   trimspaces: required by environ?
-#
-
 amsfonts
 atbegshi
 babel

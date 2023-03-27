@@ -1,8 +1,5 @@
 name: DnD LaTeX compilation
 on: [push]
-description: Compiles latex documents using xelatex.
-author: Tristan
-
 jobs:
   build_latex:
     runs-on: ubuntu-latest

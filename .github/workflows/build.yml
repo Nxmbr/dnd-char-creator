@@ -15,7 +15,7 @@ jobs:
           wget https://github.com/evanbergeron/DND-5e-LaTeX-Template/archive/refs/heads/master.zip
           unzip master.zip
           mkdir -p latex_packages
-          cp -r DND-5e-LaTeX-Template-master/* latex_packages/
+          cp -r DND-5e-LaTeX-Template-stable/* latex_packages/
 
       - name: Compile all .tex files in the working directory
         run: |

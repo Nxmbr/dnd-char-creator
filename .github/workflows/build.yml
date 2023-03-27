@@ -13,7 +13,7 @@ jobs:
       - name: Compile all .tex files in the working directory
         run: |
           mkdir -p output
-          for texfile in ./lib/dnd/characters/*.tex; do
+          for texfile in ./characters/*.tex; do
             outputfile="output/$(basename -s .tex $texfile).pdf"
             echo "Compiling $texfile -> $outputfile"
             xelatex -interaction=nonstopmode -output-directory=output "$texfile"
@@ -23,5 +23,5 @@ jobs:
         uses: dante-ev/latex-action@master
         with:
           root_file: "" # Leave this empty
-          working_directory: ./lib/dnd/characters
+          working_directory: ./characters
           compiler: xelatex

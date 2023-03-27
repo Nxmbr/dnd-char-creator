@@ -1,36 +1,23 @@
 name: DnD LaTeX compilation
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+on: [push]
 jobs:
-  build:
+  build_latex:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out repository
+      - name: Set up Git repository
         uses: actions/checkout@v2
 
-      - name: Set up TeX Live
-        uses: dante-ev/latex-action@v2.0
-        with:
-          texlive_version: scheme-small
+      - name: Install TeX Live XeTeX package
+        run: sudo apt-get install -y texlive-xetex
 
-      - name: Download DND-5e-LaTeX-Template repository
+      - name: Download DND-5e-LaTeX-Template repository and copy the content
         run: |
           wget https://github.com/evanbergeron/DND-5e-LaTeX-Template/archive/refs/heads/master.zip
           unzip master.zip
-
-      - name: Set up LaTeX packages
-        run: |
           mkdir -p latex_packages
           cp -r DND-5e-LaTeX-Template-master/* latex_packages/
 
-      - name: Compile LaTeX documents
+      - name: Compile all .tex files in the working directory
         run: |
           mkdir -p output
           for texfile in ./characters/*.tex; do
@@ -38,3 +25,10 @@ jobs:
             echo "Compiling $texfile -> $outputfile"
             TEXINPUTS=./latex_packages//: xelatex -interaction=nonstopmode -output-directory=output "$texfile"
           done
+
+      - name: Compile the main document
+        uses: dante-ev/latex-action@master
+        with:
+          root_file: "" # Leave this empty
+          working_directory: ./characters
+          compiler: xelatex

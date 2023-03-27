@@ -8,13 +8,17 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Compile all .tex files in the working directory
+        run: |
+          mkdir -p output
+          for texfile in ./lib/dnd/characters/*.tex; do
+            outputfile="output/$(basename -s .tex $texfile).pdf"
+            echo "Compiling $texfile -> $outputfile"
+            xelatex -interaction=nonstopmode -output-directory=output "$texfile"
+          done
+
+      - name: Compile the main document
         uses: dante-ev/latex-action@master
         with:
-          pre_compile: |
-            for texfile in ./lib/dnd/characters/*.tex; do
-              echo "Compiling $texfile"
-              xelatex -interaction=nonstopmode "$texfile"
-            done
           root_file: "" # Leave this empty
-          working_directory: ./characters
+          working_directory: ./lib/dnd/characters
           compiler: xelatex
